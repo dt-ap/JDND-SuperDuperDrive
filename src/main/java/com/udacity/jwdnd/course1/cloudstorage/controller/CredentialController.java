@@ -4,6 +4,7 @@ import com.udacity.jwdnd.course1.cloudstorage.exception.CredentialException;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.CredentialForm;
 import com.udacity.jwdnd.course1.cloudstorage.service.CredentialService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,11 +24,8 @@ public class CredentialController {
   private static final String credErrorFlash = "credError";
   private static final String credRedirect = "redirect:/home#credentials";
 
-  private final CredentialService service;
-
-  public CredentialController(CredentialService service) {
-    this.service = service;
-  }
+  @Autowired
+  private CredentialService service;
 
   @PostMapping
   public String addOrEditCredential(@Valid @ModelAttribute CredentialForm form, BindingResult result, RedirectAttributes redirectAttr) {

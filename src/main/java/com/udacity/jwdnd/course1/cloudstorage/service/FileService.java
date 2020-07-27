@@ -26,7 +26,7 @@ public class FileService {
   }
 
   public File getFileById(Integer id) {
-    return mapper.findFilebyIdAndUserId(id, userService.getCurrentUser().getUserId());
+    return mapper.findFilebyIdAndUserId(id, userService.getCurrentUser().getUserId()).orElseThrow(() -> new FileException("File not found"));
   }
 
   public int create(File file) throws FileException {

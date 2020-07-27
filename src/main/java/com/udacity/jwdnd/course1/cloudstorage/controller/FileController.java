@@ -29,12 +29,16 @@ public class FileController {
 
   @GetMapping("/{id}")
   public ResponseEntity<?> getFile(@PathVariable Integer id) {
-    var file = service.getFileById(id);
-    var contentDesc = "attachment; filename=\"" + file.getName() + "\"";
-    return ResponseEntity.ok()
-        .contentType(MediaType.parseMediaType(file.getContentType()))
-        .header(HttpHeaders.CONTENT_DISPOSITION, contentDesc)
-        .body(file.getData());
+    try {
+      var file = service.getFileById(id);
+      var contentDesc = "attachment; filename=\"" + file.getName() + "\"";
+      return ResponseEntity.ok()
+          .contentType(MediaType.parseMediaType(file.getContentType()))
+          .header(HttpHeaders.CONTENT_DISPOSITION, contentDesc)
+          .body(file.getData());
+    } catch (FileException ex) {
+      return ResponseEntity.notFound().build();
+    }
   }
 
   @PostMapping
